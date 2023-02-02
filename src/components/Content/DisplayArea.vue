@@ -66,8 +66,6 @@ export default {
             }
 
         },
-        // onReady(canvas) {
-        // },
         drawImage(context, image, x, y, width, height, radius = 4) {
             context.shadowOffsetX = 0;
             context.shadowOffsetY = 2;

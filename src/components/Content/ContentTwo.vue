@@ -8,8 +8,6 @@
       <input type="color" v-model="hexCode2" @input="handleInput('input-value3', hexCode2)">
       <input type="text" v-model="hexCode2" @input="handleInput('input-value3', hexCode2)">
     </div>
-  </div>
-  <div class="gradient-input">
     <div>
       <label>MaskPattern:</label>
       <input type="number" v-model.number="MaskPattern" min="0"
