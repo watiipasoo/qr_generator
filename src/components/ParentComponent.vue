@@ -2,11 +2,12 @@
   <div class="wrapper">
     <div class="w-container">
       <div class="top-bar">
-        <h1 class="title">QUICK QRCode</h1>
+        <img src="../assets/logo.png" alt="Your Title Image" class="title-image">
         <ul>
-          <li><a href="/">QR Generator</a></li>
+          <li><a href="/">Help</a></li>
         </ul>
       </div>
+      <h2 class="centered-title">Quick QR-Code</h2>
       <ContentOne v-on:input-value="updateValue" />
       <div class="container">
         <div>
@@ -114,5 +115,12 @@ export default {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 2px;
+}
+.centered-title {
+  text-align: center;
+  padding-top: 1rem; 
+  padding-bottom: 3rem;
+  font-size: 2rem;
+  font-weight: 800;
 }
 </style>

@@ -100,7 +100,7 @@ img {
 }
 
 .drag-area {
-    border: 5px dashed #1b1b1b;
+    border: 2px dashed #1b1b1b;
     padding: 10px;
     margin-top: 1rem;
     border-radius: 5px;
