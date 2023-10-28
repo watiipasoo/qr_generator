@@ -1,15 +1,29 @@
 <template>
-    <vue-qrcode ref="qrcode" :value="hello" :options="options"></vue-qrcode>
-    <p ref="DisplayError"></p>
-    <div class="container"> <button
-            v-on:click="getinput(InputData, hexCode, hexCode2, InputData2, InputData3, selectedImage, this.$refs.qrcode.$el)"><span>Generate
-                code</span></button>
-                </div>
+    <div class="qr-code-container">
+        <h4 class="preview">PREVIEW</h4>
+        <div class="code">
+            <vue-qrcode ref="qrcode" :value="hello" :options="options"></vue-qrcode>
+        </div>
+      
+      <p ref="DisplayError" class="error"></p>
+      <div class="btn-container">
+        <button class="generate-btn" @click="getinput(InputData, hexCode, hexCode2, InputData2, InputData3, selectedImage, this.$refs.qrcode.$el)">
+          <span>Generate</span>
+        </button>
+        <button class="download-btn" @click="downloadQRCode">
+          <span>Download</span>
+        </button>
+        <button class="print-btn" @click="printQRCodeAsPDF">
+        <span>PDF</span>
+      </button>
+      </div>
+    </div>
 </template>
 
 
 <script>
 import VueQrcode from '@chenfengyuan/vue-qrcode'
+import jsPDF from 'jspdf';
 
 export default {
     components: { VueQrcode },
@@ -19,7 +33,7 @@ export default {
             hello: "hello",
             options: {
                 maskPattern: 7,
-                scale: 4,
+                scale: 15,
                 color: {
                     dark: '#000000',
                     light: '#ffffff',
@@ -28,6 +42,9 @@ export default {
             }
         }
     },
+    mounted() {
+    this.$refs.qrcode.scale = this.options.scale;
+  },
     methods: {
         getinput(InputData, hexCode, hexCode2, InputData2, InputData3, selectedImage, canvas) {
 
@@ -51,10 +68,11 @@ export default {
                 this.options.scale = InputData3
                 this.options.color.dark = hexCode
                 this.options.color.light = hexCode2
+                this.options.scale = 15;
                 // onReady()
             } catch (error) {
                 if (error.message === 'InputData is not defined') {
-                    this.$refs.DisplayError.textContent = "Input is empty"
+                    this.$refs.DisplayError.textContent = "Enter URL!"
                     setTimeout(() => {
                         this.$refs.DisplayError.textContent = ""
                     }, 2000)
@@ -86,101 +104,98 @@ export default {
             context.fillRect(x, x, width, height);
             context.drawImage(image, x, x, width, height);
         },
+        downloadQRCode() {
+      try {
+        if (!this.$refs.qrcode) throw new Error("QR code is not generated");
+
+        const canvas = this.$refs.qrcode.$el;
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'qrcode.png';
+        link.click();
+      } catch (error) {
+        console.error(error);
+        // Handle the error, if necessary.
+      }
+    },
+    printQRCodeAsPDF() {
+      try {
+        if (!this.$refs.qrcode) throw new Error("QR code is not generated");
+
+        const canvas = this.$refs.qrcode.$el;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 10, 90, 90);
+        pdf.save('qrcode.pdf');
+      } catch (error) {
+        console.error(error);
+      }
+    }
     }
 }
 </script>
 
 <style scoped>
-*,
-*:after,
-*:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap');
-
-:root {
-    --font-style: 'Nunito Sans', sans-serif;
-}
-
-* {
-    box-sizing: border-box;
-}
-
+/* Add styles for the QR code and its container */
 .container {
-    position: relative;
-    margin-top: 20px;
+  position: relative;
+  margin-top: 20px;
 }
 
-button {
-    display: inline-block;
-    position: relative;
+
+.qr-code-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.error{
+    color: red;
+    font-weight: 600;
+    font-size: medium;
+}
+.qr-code {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  background: white;
+}
+
+.preview{
+    font-weight:bold;
+    font-size: 2rem; 
+    padding: 1rem;
+}
+.generate-btn{
     background: none;
-    border: none;
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-    background: #18181B;
+    border: 1px solid #273775;
+    padding:1rem;
+    color: #273775;
 }
 
-span {
-    display: block;
-    padding: 25px 80px;
+.download-btn{
+    background: #273775;
+    padding:1rem;
+    color: white;
 }
 
-button::before,
-button::after {
-    content: "";
-    width: 0;
-    height: 2px;
-    position: absolute;
-    transition: all 0.2s linear;
-    background: #54E6E7;
+.print-btn{
+    background: #F9F871;
+    padding-left:2rem;
+    padding-right:2rem;
+    color: black;
 }
 
-span::before,
-span::after {
-    content: "";
-    width: 2px;
-    height: 0;
-    position: absolute;
-    transition: all 0.2s linear;
-    background: #54E6E7;
+button{
+    border-radius: 2rem;
+    button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
 }
 
-button:hover::before,
-button:hover::after {
-    width: 100%;
+.btn-container{
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 2rem;
 }
 
-button:hover span::before,
-button:hover span::after {
-    height: 100%;
-}
-
-button::after {
-    right: 0;
-    bottom: 0;
-    transition-duration: 0.4s;
-}
-
-button span::after {
-    right: 0;
-    bottom: 0;
-    transition-duration: 0.4s;
-}
-
-button::before {
-    left: 0;
-    top: 0;
-    transition-duration: 0.4s;
-}
-
-button span::before {
-    left: 0;
-    top: 0;
-    transition-duration: 0.4s;
-}
 </style>

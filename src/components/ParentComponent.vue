@@ -1,23 +1,24 @@
 <template>
-  <div>
-    <ul>
-      <li v-for="item in items" @click="showContent(item)" :key="item.id" :class="{ active: item === selectedItem }">{{
-        item.title
-      }}</li>
-    </ul>
-    <div class="content" v-show="selectedItem === items[0]">
+  <div class="wrapper">
+    <div class="w-container">
+      <div class="top-bar">
+        <h1 class="title">QUICK QRCode</h1>
+        <ul>
+          <li><a href="/">QR Generator</a></li>
+        </ul>
+      </div>
       <ContentOne v-on:input-value="updateValue" />
-    </div>
-    <div class="content" v-show="selectedItem === items[1]">
-      <ContentTwo v-on:input-value2="updateValue2" v-on:input-value3="updateValue3" v-on:input-value4="updateValue4"
-        v-on:input-value5="updateValue5" />
-    </div>
-    <div class="content" v-show="selectedItem === items[2]">
-      <ContentThree @selected="setSelectedImage" />
-    </div>
-    <div class="content" v-show="selectedItem === items[3]">
-      <DisplayArea :InputData="InputData" :InputData2="InputData2" :InputData3="InputData3" :hexCode="hexCode"
-        :hexCode2="hexCode2" :selectedImage="selectedImage" />
+      <div class="container">
+        <div>
+          <ContentTwo v-on:input-value2="updateValue2" v-on:input-value3="updateValue3" v-on:input-value4="updateValue4"
+            v-on:input-value5="updateValue5" />
+          <ContentThree @selected="setSelectedImage" />
+        </div>
+        <div class="display-area">
+          <DisplayArea :InputData="InputData" :InputData2="InputData2" :InputData3="InputData3" :hexCode="hexCode"
+            :hexCode2="hexCode2" :selectedImage="selectedImage" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -82,44 +83,36 @@ export default {
 </script>
 
 <style scoped>
-ul {
-  margin: 5% 5% 2% 5%;
+.container {
   display: flex;
-  flex-direction: row;
-  list-style: none;
-  padding: 25px 0;
-  border-radius: 25px;
-  border: 0.1px solid #099FFF;
-  background-color: #18181B;
-  box-shadow: 0 4px 8px 0 #00FFFF, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-li {
-  margin: auto;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-li::after {
-  display: block;
-  content: '';
-  border-bottom: solid 1px #00FFFF;
-  padding-bottom: 1%;
-  transform: scaleX(0);
-  transition: transform 300ms ease-in-out;
-}
-
-li:hover::after {
-  transform: scaleX(1);
-}
-
-.content {
-  border-radius: 25px;
-  margin: 0 5% 0 5%;
-  padding: 25px 0;
-  background: #2B3241;
-  box-sizing: border-box;
+  gap: 4rem;
   justify-content: center;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 3rem;
+}
+
+.display-area {
+  border: 2px solid #273775;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+.title {
+  font-size: 36px;
+  color: #273775;
+  margin: 4px 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 </style>

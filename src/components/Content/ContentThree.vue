@@ -1,4 +1,8 @@
 <template>
+     <div class="images-container">
+        <img v-for="(imgSrc, index) in imgSrcList" :src="imgSrc" :key="index"
+            @click="selectImage(imgSrc, index)" :class="{ thumbnail: selectedIndex === index }" />
+    </div>
     <div class="drag-area" ref="dropArea">
         <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
         <header ref="dragText">Drag & Drop to Upload File</header>
@@ -6,10 +10,7 @@
         <button @click="openFilePicker">Browse File</button>
         <input type="file" hidden ref="input" multiple />
     </div>
-    <div class="images-container">
-        <img v-for="(imgSrc, index) in imgSrcList" :src="imgSrc" width="120" height="120" :key="index"
-            @click="selectImage(imgSrc, index)" :class="{ thumbnail: selectedIndex === index }" />
-    </div>
+   
 </template>
 
 <script>
@@ -99,11 +100,9 @@ img {
 }
 
 .drag-area {
-    border: 10px dashed #1b1b1b;
-    /* height: 500px;
-    width: 700px; */
-    margin: 50px;
-    padding: 20px;
+    border: 5px dashed #1b1b1b;
+    padding: 10px;
+    margin-top: 1rem;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -120,24 +119,22 @@ img {
 }
 
 header {
-    font-size: 30px;
+    font-size: 15px;
     font-weight: 500;
 }
 
 span {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 500;
     margin: 10px 0 15px 0;
 }
 
-button {
-    padding: 10px 25px;
-    font-size: 20px;
+button { padding: 1rem;
     font-weight: 500;
     border: none;
     outline: none;
-    background: #18181B;
-    color: #00ffff;
+    background: #000000;
+    color: #ffffff;
     border-radius: 5px;
     cursor: pointer;
 }
