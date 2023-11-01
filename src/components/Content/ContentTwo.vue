@@ -15,11 +15,11 @@
       <input type="number" v-model.number="MaskPattern" min="0"
         @input="handleMPInput('input-value4', MaskPattern)" />
     </div>
-    <div>
+    <!-- <div>
       <label>Size: </label>
       <input type="number" v-model.number="Scale" min="0"
         @input="handleScaleInput('input-value5', Scale)" />
-    </div>
+    </div> -->
   </div>
 </template>
 

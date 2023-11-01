@@ -11,8 +11,10 @@
     "@chenfengyuan/vue-qrcode": "^2.0.0",
     "core-js": "^3.8.3",
     "jspdf": "^2.5.1",
+    "qr-code-styling": "1.6.0-rc.1",
     "qrcode": "^1.5.1",
     "vue": "^3.2.45",
+    "vue-class-component": "^7.2.6",
     "vue-qrcode-component": "^2.1.1",
     "vue-router": "^4.1.6"
   },

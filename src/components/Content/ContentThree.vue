@@ -95,8 +95,10 @@ export default {
 }
 
 img {
-    margin: 10px 10px 0 20px;
-    cursor: pointer;
+  max-width: 150px;
+  max-height: 150px;
+  margin: 10px 10px 0 20px;
+  cursor: pointer;
 }
 
 .drag-area {
